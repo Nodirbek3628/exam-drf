@@ -32,9 +32,10 @@ INSTALLED_APPS = [
     'apps.users',
     'apps.doctors',
     'apps.appointments',
+    'drf_spectacular',
     
-     'rest_framework',
-     'rest_framework_simplejwt',
+    'rest_framework',
+    'rest_framework_simplejwt',
 ]
 
 MIDDLEWARE = [
@@ -123,8 +124,32 @@ REST_FRAMEWORK = {
     
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
+    ),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
 
 AUTH_USER_MODEL = 'users.CustomUser'
+
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Clinic Appointment API',
+    'DESCRIPTION': 'Clinic system for doctors, patients and appointments',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+
+    'COMPONENT_SPLIT_REQUEST': True,
+
+    'SECURITY': [
+        {
+            'BearerAuth': []
+        }
+    ],
+    'SECURITY_DEFINITIONS': {
+        'BearerAuth': {
+            'type': 'http',
+            'scheme': 'bearer',
+            'bearerFormat': 'JWT',
+        }
+    },
+}
