@@ -1,17 +1,14 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
+
 class CustomUser(AbstractUser):
     class Role(models.TextChoices):
-        ADMIN = 'admin', 'Admin'
-        DOCTOR = 'doctor', 'Doctor'
-        PATIENT = 'patient', 'Patient'
+        ADMIN = "admin", "Admin"
+        DOCTOR = "doctor", "Doctor"
+        PATIENT = "patient", "Patient"
 
-    role = models.CharField(
-        max_length=20,
-        choices=Role.choices,
-        default=Role.PATIENT
-    )
+    role = models.CharField(max_length=20, choices=Role.choices, default=Role.PATIENT)
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -32,23 +29,17 @@ class CustomUser(AbstractUser):
 
 
 class PatientProfile(models.Model):
-
     class Gender(models.TextChoices):
-        MALE = 'male', 'Male'
-        FEMALE = 'female', 'Female'
+        MALE = "male", "Male"
+        FEMALE = "female", "Female"
 
     user = models.OneToOneField(
-        'users.CustomUser',
-        on_delete=models.CASCADE,
-        related_name='patient_profile'
+        "users.CustomUser", on_delete=models.CASCADE, related_name="patient_profile"
     )
     phone = models.CharField(max_length=20)
     date_of_birth = models.DateField()
     gender = models.CharField(
-        max_length=10,
-        choices=Gender.choices,
-        null=True,
-        blank=True
+        max_length=10, choices=Gender.choices, null=True, blank=True
     )
 
     def __str__(self):
