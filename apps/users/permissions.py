@@ -20,13 +20,11 @@ class IsPatient(BasePermission):
 
     def has_permission(self, request, view):
         return request.user.is_authenticated and request.user.is_patient
-    
+
+
 class IsOwner(BasePermission):
     message = "siz Admin Ham Patient ham emassz"
-    
+
     def has_permission(self, request, view):
         user = request.user
-        return (
-            user.is_authenticated and
-            (user.is_admin or user.is_patient)
-        )
+        return user.is_authenticated and (user.is_admin or user.is_patient)
