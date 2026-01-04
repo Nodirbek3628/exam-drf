@@ -16,11 +16,17 @@ class IsDoctor(BasePermission):
 
 
 class IsPatient(BasePermission):
-    message = "Siz Bemor emassiz"
+    message = "Siz Patient emassiz"
 
     def has_permission(self, request, view):
+        return request.user.is_authenticated and request.user.is_patient
+    
+class IsOwner(BasePermission):
+    message = "siz Admin Ham Patient ham emassz"
+    
+    def has_permission(self, request, view):
+        user = request.user
         return (
-            request.user.is_authenticated
-            and request.user.is_patient
-            and hasattr(request.user, "patient_profile")
+            user.is_authenticated and
+            (user.is_admin or user.is_patient)
         )
