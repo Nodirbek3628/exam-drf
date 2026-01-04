@@ -15,7 +15,7 @@ class UserShortSerializer(serializers.ModelSerializer):
         )
 
 
-class DoctorListSeralizer(serializers.ModelSerializer):
+class DoctorListDetailSeralizer(serializers.ModelSerializer):
     user = UserShortSerializer(read_only=True)
 
     class Meta:
@@ -27,3 +27,9 @@ class DoctorListSeralizer(serializers.ModelSerializer):
             "gender",
             "user",
         )
+
+
+class DoctorUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DoctorProfile
+        fields = ("specialization", "experience_years", "gender")
